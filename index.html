@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <title>С Днём Святого Валентина!</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #ffe6e6;
+            padding: 50px;
+        }
+        .heart {
+            font-size: 50px;
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <h1>С Днём Святого Валентина!</h1>
+    <h6>Этот сайт хранит тайну отправителя,  
+      На пути к разгадке — подсказка, как светлячок.  
+      Желаю удачи.  
+      Найди правльный путь к ответам!
+    (Тебе понадобятся знания которые мы получили на 3-м курсе)</h6>
+    <p class="heart">❤️</p>
+    <div class="modal fade text-black" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content text-dark bg-white"> 
+          <div class="modal-header">
+            <button type="button" class="text-white btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </button>
+          </div>
+          <div class="modal-body ">
+            <form id="form1"> 
+
+              <div class="form-group">
+                <label for="recipient-name" class="col-form-label"></label>
+                <canvas class="text-dark bg-white" id="holst" width="450" height="450"></canvas>
+    <p>Счёт: <span id="counter">0</span>  <span id="counter-text">Поиграй может будет что)</span></p>
+    <script>
+        const canvas = document.getElementById("holst");
+        const ctx = canvas.getContext("2d");
+        const gridSize = 10;
+        let snake = [{ x: 200, y: 200 }];
+        let apple = { x: getRandomInt(0, 44) * gridSize, y: getRandomInt(0, 44) * gridSize };
+        let dx = gridSize, dy = 0, counter = 0;
+        
+        function getRandomInt(min, max) {
+            return Math.floor(Math.random() * (max - min + 1)) + min;
+        }
+
+        function draw() {
+            ctx.fillStyle = "#212529";
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            ctx.fillStyle = "red";
+            ctx.fillRect(apple.x, apple.y, gridSize, gridSize);
+            
+            ctx.fillStyle = "#00ff00";
+            snake.forEach(segment => ctx.fillRect(segment.x, segment.y, gridSize, gridSize));
+        }
+        
+        function move() {
+            let head = { x: snake[0].x + dx, y: snake[0].y + dy };
+            if (head.x < 0) head.x = canvas.width - gridSize;
+            if (head.x >= canvas.width) head.x = 0;
+            if (head.y < 0) head.y = canvas.height - gridSize;
+            if (head.y >= canvas.height) head.y = 0;
+            
+            if (head.x === apple.x && head.y === apple.y) {
+                counter++;
+                document.getElementById('counter').innerText = counter;
+                apple = { x: getRandomInt(0, 44) * gridSize, y: getRandomInt(0, 44) * gridSize };
+            } else {
+                snake.pop();
+            }
+            snake.unshift(head);
+        }
+
+        function changeDirection(event) {
+            if (event.keyCode === 37 && dx === 0) { dx = -gridSize; dy = 0; }
+            if (event.keyCode === 39 && dx === 0) { dx = gridSize; dy = 0; }
+            if (event.keyCode === 38 && dy === 0) { dy = -gridSize; dx = 0; }
+            if (event.keyCode === 40 && dy === 0) { dy = gridSize; dx = 0; }
+        }
+        
+        document.addEventListener("keydown", changeDirection);
+        let hasLogged15 = false;
+let hasLogged25 = false;
+
+function gameLoop() {
+    move();
+    draw();
+
+    if (counter >= 15 && !hasLogged15) {
+      document.getElementById('counter-text').innerHTML = "Первый ключ получен поздравляю)"
+        console.warn({
+            1: "10000101001 10000100110 10000100101 10000011101 00100000 10000101101 10000101110 10000100110 10000011111 10000100010 10000010000 00101100 00100000 10000101111 10000101000 10000101100 10000101110 10000100010 10000100010 00100000 10000011111 10000101111 10000100010 10000100000 10000101100 00100000 10000100010 10000101111 10000101001 10000100110 00100000 10000010000 10000011000 00100000 10000101111 10000101010 10000101100 10000100000 10000101001 10000011101 00100000 10000101110 10000011101 10000100101 10000100000 10000011101 10000100001 10000011101 10000010000 10000011001 00100000 10000100101 10000011101 10000100000 10000011101 10000100001 10000101000 10000100110 00101100 00100000 10000010000 10000101100 00100000 10000010000 10000100010 10000011110 10000011100 00100000 10000010000 10000100010 10000101110 10000100101 10000011101 10000100010 10000010000 00100000 10000011111 10000101100 10000101101 10000101110 10000101100 10000101111 00100000 10000010101 10000011001 10000011100 00100000 10000011111 10000011101 10000101001 10000100010 10000101011 10000010000 10000100110 10000101011 10000101000 10000011101 00101100 00100000"
+        });
+        hasLogged15 = true;
+    }
+
+    if (counter >= 25 && !hasLogged25) {
+      document.getElementById('counter-text').innerHTML = "Второй ключ получен, теперь думай что это)"
+        console.warn({
+            2: "10000101100 10000010000 10000011111 10000100010 10000010000 00100000 00100010 10000101010 10000011000 00100000 10000101000 10000101110 10000010001 10000010000 10000011000 10000100010 00100000 10000101101 10000101100 10000100001 10000101110 10000101100 10000101111 10000010000 10000101000 10000100110 00100010 00101100 00100000 10000011100 00100000 10000101011 10000011101 10000100001 10000100010 10000011011 10000101111 10000011001 00100000 10000010101 10000010000 10000101100 00100000 10000010000 10000011000 00100000 10000101011 10000100010 00100000 10000101110 10000011101 10000100101 10000101100 10000010101 10000011101 10000101110 10000101100 10000011111 10000011101 10000101011 10000011101 00101100 00100000 10000101111 10000101101 10000011101 10000101111 10000100110 10000011110 10000101100 00100000 10000010101 10000010000 10000101100 00100000 10000101101 10000101100 10000010000 10000101110 10000011101 10000010000 10000100110 10000101001 10000011101 00100000 10000101111 10000011111 10000101100 10000100010 00100000 10000011111 10000101110 10000100010 10000101010 10000011100 00100000 10000100110 00100000 10000101011 10000011101 10000100001 10000100010 10000011011 10000101111 10000011001 00100000 10000010101 10000010000 10000101100 00100000 10000011010 10000010000 10000101100 00100000 10000101011 10000100010 00100000 10000101000 10000101100 10000101011 10000100010 10000010100 00101110 0000010000111010 0000010000111011 0000010001001110 0000010001000111 00100000 00110001 00110100",
+            site: "https://allcalc.ru/node/1977 Кодировка UTF-16"
+          });
+        hasLogged25 = true;
+    }
+}
+
+        setInterval(gameLoop, 100);
+    </script>
+
+              <div class="modal-footer">                  
+                <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal" aria-label="Close" onclick="stop()"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-circle" viewBox="0 0 16 16">
+                  <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                  <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
+                </svg> Закрыть</button>
+              </div>
+
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+</div>
+    <script>
+        console.log("Если ты читаешь это, то ты на правильном пути! 🕵️‍♂️, нужно расшифровать название фунции 103 97 109 101 40 41, удачи!");
+        setTimeout(() => {console.log("Подсказка: тебе надо как-то запустить игру и с эти тебе поможет ASCII");}, 1000 * 60)
+
+
+        function game() {
+          var myModal = new bootstrap.Modal(document.getElementById('exampleModal'))
+          myModal.show()
+        }
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
+</body>
+</html>
